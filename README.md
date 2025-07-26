@@ -1,35 +1,61 @@
-# Bootcamp Santander 2025 - Desafios Python
+# 🏦 Sistema Bancário POO - Desafio 3 Santander Bootcamp
 
-Este repositório contém as soluções dos desafios de programação em Python desenvolvidos durante o **Bootcamp Santander 2025**, uma parceria entre o Santander e a Digital Innovation One (DIO).
+> Sistema bancário completo desenvolvido em Python com Programação Orientada a Objetos
 
-## 🎯 Objetivo
+## 🚀 Funcionalidades
 
-O objetivo deste repositório é documentar e compartilhar o progresso de aprendizado durante o bootcamp, apresentando soluções práticas para os desafios propostos, demonstrando a evolução das habilidades em programação Python.
+- ✅ **Criação de Clientes** (Pessoa Física)
+- ✅ **Criação de Contas Correntes** com limites
+- ✅ **Depósitos** com validações
+- ✅ **Saques** com múltiplas validações:
+  - Limite por transação (R$ 500)
+  - Limite de quantidade (3 saques)
+  - Verificação de saldo
+- ✅ **Histórico de Transações** completo
+- ✅ **Extrato Detalhado** com data/hora
+- ✅ **Listagem de Contas** cadastradas
 
-## 🏦 Origem
+## 🎯 Conceitos POO Aplicados
 
-Este projeto faz parte do **Bootcamp Santander 2025** oferecido pela **Digital Innovation One (DIO)**, focado no desenvolvimento de habilidades em Python para aplicações no setor bancário e financeiro.
+- **🔗 Herança:** `PessoaFisica` → `Cliente`, `ContaCorrente` → `Conta`
+- **🔄 Polimorfismo:** Método `sacar()` sobrescrito na `ContaCorrente`
+- **🔒 Encapsulamento:** Atributos privados com properties
+- **📋 Abstração:** Interface `Transacao` (ABC)
+- **🧩 Composição:** `Conta` possui `Historico`
+- **🏭 Factory Method:** `@classmethod nova_conta()`
 
-## 🚀 Desafios Implementados
+## 🛠️ Como Executar
 
-### 📊 Desafio 1 - Sistema Bancário Simples
+```bash
+python sistema_bancario_poo.py
+```
 
-**Objetivo**: Criar um sistema bancário básico em linha de comando que simule operações bancárias fundamentais.
+## 📊 Estrutura das Classes
 
+```mermaid
+graph TD
+    A[Transacao - ABC] --> B[Deposito]
+    A --> C[Saque]
+    D[Cliente] --> E[PessoaFisica]
+    F[Conta] --> G[ContaCorrente]
+    F --> H[Historico]
+```
 
-### � Desafio 2 - Sistema Bancário com Funções
+## 🧪 Exemplo de Uso
 
-**Objetivo**: Refatorar o sistema bancário utilizando funções para melhor organização e reutilização do código.
+1. **Criar usuário:** `[nu]`
+2. **Criar conta:** `[nc]` 
+3. **Depositar:** `[d]` → R$ 1000
+4. **Sacar:** `[s]` → R$ 200 (máx R$ 500, 3x por período)
+5. **Ver extrato:** `[e]`
 
-- Consulte o arquivo `desafio_2_proposta_do_desafio.md` para detalhes da proposta
+## 🎓 Tecnologias
 
-
-⭐ **Se este repositório foi útil para você, considere dar uma estrela!**
-
-## 📄 Licença
-
-MIT License
+- **Python 3.x**
+- **ABC (Abstract Base Classes)**
+- **datetime** para timestamp
+- **POO** com todos os pilares
 
 ---
 
-Desenvolvido por Cristhian Campelo | Bootcamp Santander 2025 - Python
+📚 **Desenvolvido durante o Santander Bootcamp 2025 - DIO**
