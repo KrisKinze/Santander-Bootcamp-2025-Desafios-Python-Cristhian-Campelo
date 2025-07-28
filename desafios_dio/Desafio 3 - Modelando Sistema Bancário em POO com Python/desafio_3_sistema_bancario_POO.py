@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod, abstractproperty
-from datetime import datetime
+from datetime import datetime, UTC
 
 #Comecando pelas interfaces e Classes Abstratas, irei implementar as funcoes posteriormente
 
@@ -7,7 +7,7 @@ class Transacao(ABC):
     @abstractmethod
     def registrar(self,Conta):
         pass
-
+    
 class Deposito(Transacao):
     
     def __init__(self, valor):
@@ -54,8 +54,17 @@ class Historico:
         self._transacoes.append({
             "tipo": transacao.__class__.__name__,
             "valor": transacao.valor,
-            "data": datetime.now().strftime("%d-%m-%Y %H:%M:%s"), #Esse eu pesquisei.
+            "data": datetime.now(UTC).strftime("%d-%m-%Y %H:%M:%S"),  # Atualizado com a nova sintaxe do UTC
         })
+
+    def transacoes_do_dia(self):
+        data_atual = datetime.now(UTC).date()
+        transacoes = []
+        for transacao in self._transacoes:
+            data_transacao = datetime.strptime(transacao["data"], "%d-%m-%Y %H:%M:%S").date()
+            if data_atual == data_transacao:
+                transacoes.append(transacao)
+        return transacoes
 
 class Cliente:
     def __init__(self,endereco):
@@ -64,6 +73,10 @@ class Cliente:
 
 
     def realizar_transacao(self, conta, transacao):
+        if len(conta.historico.transacoes_do_dia()) >= 10:
+            print("\n@@@ Você excedeu o número de transações permitidas do dia. @@@")
+            return
+        
         transacao.registrar(conta)
 
     def adicionar_conta(self,conta):
@@ -273,7 +286,7 @@ def exibir_extrato(clientes):
         extrato = "Não foram realizadas movimentações."
     else:
         for transacao in transacoes:
-            extrato += f"\n{transacao['tipo']}:\n\tR$ {transacao['valor']:.2f}\n\tData: {transacao['data']}"
+            extrato += f"\n{transacao['data']}\n{transacao['tipo']}:\n\tR$ {transacao['valor']:.2f}\n\tData: {transacao['data']}"
     
     print(extrato)
     print(f"\nSaldo:\n\tR$ {conta.saldo:.2f}")
